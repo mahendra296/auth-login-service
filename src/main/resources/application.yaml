@@ -1,6 +1,10 @@
 server:
   port: 8080
 
+logging:
+  level:
+    com.auth: DEBUG
+
 spring:
   application:
     name: auth-login-service
@@ -23,3 +27,31 @@ spring:
   liquibase:
     change-log: classpath:/db/master.xml
     enabled: true
+
+oauth:
+  google:
+    client-id: ${GOOGLE_CLIENT_ID:your-google-client-id}
+    client-secret: ${GOOGLE_CLIENT_SECRET:your-google-client-secret}
+    redirect-uri: http://localhost:8080/auth/google/callback
+    auth-uri: https://accounts.google.com/o/oauth2/v2/auth
+    token-uri: https://oauth2.googleapis.com/token
+    user-info-uri: https://www.googleapis.com/oauth2/v2/userinfo
+    scopes: openid,profile,email
+
+  github:
+    client-id: ${GITHUB_CLIENT_ID:your-github-client-id}
+    client-secret: ${GITHUB_CLIENT_SECRET:your-github-client-secret}
+    redirect-uri: http://localhost:8080/auth/github/callback
+    auth-uri: https://github.com/login/oauth/authorize
+    token-uri: https://github.com/login/oauth/access_token
+    user-info-uri: https://api.github.com/user
+    user-emails-uri: https://api.github.com/user/emails
+    scopes: read:user,user:email
+
+  cookie:
+    max-age: 600
+    secure: false  # Set to true in production (HTTPS)
+    http-only: true
+    same-site: lax
+
+  frontend-redirect-url: http://localhost:8080
